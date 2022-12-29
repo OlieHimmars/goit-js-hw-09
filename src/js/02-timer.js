@@ -10,8 +10,11 @@ const options = {
   minuteIncrement: 1,
   disableMobile: true,
     onClose(selectedDates) {
-        chosenTime = selectedDates[0].getTime();
-        onCount = chosenTime - fp.now.getTime();
+           
+        onCount = selectedDates[0].getTime() - fp.now.getTime();
+        console.log(onCount);
+        console.log(selectedDates[0]);
+        console.log(fp.now);
     if (onCount > 0) {
         startBtn.disabled = false;
     } else{
@@ -32,7 +35,7 @@ let secOnCount = document.querySelector('span[data-seconds]');
 let onCount = 0;
 startBtn.disabled = true;
 startBtn.addEventListener('click', onStart);
-myInput.addEventListener('submit', options.onClose)
+//myInput.addEventListener('submit', options.onClose)
 
 
 function onStart(e) {
