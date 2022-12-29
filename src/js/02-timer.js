@@ -1,7 +1,7 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
-import { Ukrainian } from "flatpickr/dist/l10n/uk.js"   //????
-import Notiflix from 'notiflix';//не обов'язково
+import { Ukrainian } from "flatpickr/dist/l10n/uk.js"
+import Notiflix from 'notiflix';
 
 const options = {
   enableTime: true,
@@ -23,8 +23,6 @@ const options = {
 const startBtn = document.querySelector("button[type='button']");
 const myInput = document.querySelector("#datetime-picker");
 const fp = flatpickr(myInput, options);
-
-
 
 let daysOnCount = document.querySelector("span[data-days]");
 let hoursOnCount = document.querySelector('span[data-hours]');
@@ -50,11 +48,9 @@ function convertMs(ms) {
 
   // Remaining days
     let days = Math.floor(ms / day);
-    
     daysOnCount.innerHTML = addLeadingZero(days);
   // Remaining hours
     let hours = Math.floor((ms % day) / hour);
-    
     hoursOnCount.innerHTML = addLeadingZero(hours);;
   // Remaining minutes
     let minutes = Math.floor(((ms % day) % hour) / minute);
@@ -63,6 +59,7 @@ function convertMs(ms) {
     let seconds = Math.floor((((ms % day) % hour) % minute) / second);
     secOnCount.innerHTML = addLeadingZero(seconds);
 
+    ms -= 1000;
 };
 
 function addLeadingZero(value) {
