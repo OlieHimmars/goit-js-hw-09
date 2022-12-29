@@ -29,7 +29,7 @@ let hoursOnCount = document.querySelector('span[data-hours]');
 let minOnCount = document.querySelector('span[data-minutes]');
 let secOnCount = document.querySelector('span[data-seconds]');
 
-//let onCount = 0;
+let onCount = 0;
 startBtn.disabled = true;
 startBtn.addEventListener('click', onStart);
 //myInput.addEventListener('submit', options.onClose)
@@ -59,11 +59,13 @@ function addLeadingZero(value) {
 };
 
 function onStart(e) {
-    setInterval( updateClock(convertMs(newDate.getTime()- fp.now.getTime())), 1000 );
+    setInterval( updateClock, 1000 );
 
 };
 
 function updateClock({ days, hours, minutes, seconds }) {
+    onCount = newDate.getTime() - fp.now.getTime();
+    convertMs(onCount);
     daysOnCount.innerHTML = addLeadingZero(days);
     hoursOnCount.innerHTML = addLeadingZero(hours);
     minOnCount.innerHTML = addLeadingZero(minutes);
