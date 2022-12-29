@@ -50,27 +50,21 @@ function convertMs(ms) {
 
   // Remaining days
     let days = Math.floor(ms / day);
-    if (days < 10) {
-        days = '0' + days;
-    };
-    daysOnCount.innerHTML = days;
+    
+    daysOnCount.innerHTML = addLeadingZero(days);
   // Remaining hours
     let hours = Math.floor((ms % day) / hour);
-    if (hours < 10) {
-        hours = '0' + hours;
-    };
-    hoursOnCount.innerHTML = hours;
+    
+    hoursOnCount.innerHTML = addLeadingZero(hours);;
   // Remaining minutes
     let minutes = Math.floor(((ms % day) % hour) / minute);
-    if (minutes < 10) {
-        minutes = '0' + minutes;
-    };
-    minOnCount.innerHTML = minutes;
+    minOnCount.innerHTML = addLeadingZero(minutes);
   // Remaining seconds
     let seconds = Math.floor((((ms % day) % hour) % minute) / second);
-    if (seconds < 10) {
-        seconds = '0' + seconds;
-    }
-    secOnCount.innerHTML = seconds;
+    secOnCount.innerHTML = addLeadingZero(seconds);
 
-}
+};
+
+function addLeadingZero(value) {
+    return String(value).padStart(2, '0');
+};
