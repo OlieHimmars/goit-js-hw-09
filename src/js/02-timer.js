@@ -10,11 +10,8 @@ const options = {
   minuteIncrement: 1,
   disableMobile: true,
     onClose(selectedDates) {
-           
+        newDate = selectedDates[0];
         onCount = selectedDates[0].getTime() - fp.now.getTime();
-        console.log(onCount);
-        console.log(selectedDates[0]);
-        console.log(fp.now);
     if (onCount > 0) {
         startBtn.disabled = false;
     } else{
@@ -32,39 +29,43 @@ let hoursOnCount = document.querySelector('span[data-hours]');
 let minOnCount = document.querySelector('span[data-minutes]');
 let secOnCount = document.querySelector('span[data-seconds]');
 
-let onCount = 0;
+//let onCount = 0;
 startBtn.disabled = true;
 startBtn.addEventListener('click', onStart);
 //myInput.addEventListener('submit', options.onClose)
 
-
-function onStart(e) {
-    setInterval(convertMs(onCount), 1000);
-};
-
 function convertMs(ms) {
   // Number of milliseconds per unit of time
+    ms -= 1000;
   const second = 1000;
   const minute = second * 60;
   const hour = minute * 60;
   const day = hour * 24;
 
   // Remaining days
-    let days = Math.floor(ms / day);
-    daysOnCount.innerHTML = addLeadingZero(days);
+  const days = Math.floor(ms / day);
   // Remaining hours
-    let hours = Math.floor((ms % day) / hour);
-    hoursOnCount.innerHTML = addLeadingZero(hours);;
+  const hours = Math.floor((ms % day) / hour);
   // Remaining minutes
-    let minutes = Math.floor(((ms % day) % hour) / minute);
-    minOnCount.innerHTML = addLeadingZero(minutes);
+  const minutes = Math.floor(((ms % day) % hour) / minute);
   // Remaining seconds
-    let seconds = Math.floor((((ms % day) % hour) % minute) / second);
-    secOnCount.innerHTML = addLeadingZero(seconds);
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
-    ms -= 1000;
-};
+  return { days, hours, minutes, seconds };
+}
 
 function addLeadingZero(value) {
     return String(value).padStart(2, '0');
 };
+
+function onStart(e) {
+    setInterval( updateClock(convertMs(newDate.getTime()- fp.now.getTime())), 1000 );
+
+};
+
+function updateClock({ days, hours, minutes, seconds }) {
+    daysOnCount.innerHTML = addLeadingZero(days);
+    hoursOnCount.innerHTML = addLeadingZero(hours);
+    minOnCount.innerHTML = addLeadingZero(minutes);
+    secOnCount.innerHTML = addLeadingZero(seconds);
+}
