@@ -58,7 +58,7 @@ function addLeadingZero(value) {
 };
 
 function onStart(e) {
-    setInterval(updateClock(convertMs(newDate.getTime() - fp.now.getTime())), 1000 );
+    setInterval(updateClock(convertMs(newDate.getTime() - Date.now())), 1000 );
 };
 
 function updateClock({ days, hours, minutes, seconds }) {
