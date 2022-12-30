@@ -10,9 +10,9 @@ const options = {
   minuteIncrement: 1,
   disableMobile: true,
     onClose(selectedDates) {
-        newDate = selectedDates[0];
-        onCount = selectedDates[0].getTime() - fp.now.getTime();
-    if (onCount > 0) {
+        let newDate = selectedDates[0];
+        let onCount = newDate.getTime() - fp.now.getTime();
+    if (onCount>0) {
         startBtn.disabled = false;
     } else{
         Notiflix.Report.failure('Please choose a date in the future', '', 'OK');
@@ -29,7 +29,7 @@ let hoursOnCount = document.querySelector('span[data-hours]');
 let minOnCount = document.querySelector('span[data-minutes]');
 let secOnCount = document.querySelector('span[data-seconds]');
 
-let onCount = 0;
+//let onCount = 0;
 startBtn.disabled = true;
 startBtn.addEventListener('click', onStart);
 //myInput.addEventListener('submit', options.onClose)

@@ -16,7 +16,7 @@ function onSubmit(e) {
   e.preventDefault();
   for (let i = 0; i < Number(refs.amount.value); i += 1) {
     nextDelay = delay + step * i;
-    setTimeout(createPromise(i + 1, nextDelay), nextDelay);
+    npm (createPromise(i + 1, nextDelay), nextDelay);
     set;
   };
 };
