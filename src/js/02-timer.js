@@ -3,6 +3,9 @@ import "flatpickr/dist/flatpickr.min.css";
 import { Ukrainian } from "flatpickr/dist/l10n/uk.js"
 import Notiflix from 'notiflix';
 
+let onCount = null;
+let newDate = null;
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -10,12 +13,13 @@ const options = {
   minuteIncrement: 1,
   disableMobile: true,
     onClose(selectedDates) {
-        let newDate = selectedDates[0];
-        let onCount = newDate.getTime() - fp.now.getTime();
-    if (onCount>0) {
+        newDate = selectedDates[0].getTime();
+        onCount = newDate - fp.now.getTime();
+    if (newDate > fp.now.getTime()) {
         startBtn.disabled = false;
+        convertMs(onCount);
     } else{
-        Notiflix.Report.failure('Please choose a date in the future', '', 'OK');
+        Notiflix.Notify.failure('Please choose a date in the future');
     };
   },
 };
@@ -23,6 +27,7 @@ const options = {
 const startBtn = document.querySelector("button[type='button']");
 const myInput = document.querySelector("#datetime-picker");
 const fp = flatpickr(myInput, options);
+const counter = {};
 
 let daysOnCount = document.querySelector("span[data-days]");
 let hoursOnCount = document.querySelector('span[data-hours]');
@@ -43,15 +48,15 @@ function convertMs(ms) {
   const day = hour * 24;
 
   // Remaining days
-  const days = Math.floor(ms / day);
+   counter.days = Math.floor(ms / day);
   // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
+   counter.hours = Math.floor((ms % day) / hour);
   // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
+   counter.minutes = Math.floor(((ms % day) % hour) / minute);
   // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+   counter.seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
-  return { days, hours, minutes, seconds };
+ // = { days, hours, minutes, seconds };
 }
 
 function addLeadingZero(value) {
@@ -59,13 +64,12 @@ function addLeadingZero(value) {
 };
 
 function onStart(e) {
-    setInterval( updateClock, 1000 );
+    setInterval( updateClock(counter), 1000 );
 
 };
 
 function updateClock({ days, hours, minutes, seconds }) {
-    onCount = newDate.getTime() - fp.now.getTime();
-    convertMs(onCount);
+    //onCount = newDate - fp.now.getTime();
     daysOnCount.innerHTML = addLeadingZero(days);
     hoursOnCount.innerHTML = addLeadingZero(hours);
     minOnCount.innerHTML = addLeadingZero(minutes);

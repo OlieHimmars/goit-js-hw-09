@@ -16,19 +16,31 @@ function onSubmit(e) {
   e.preventDefault();
   for (let i = 0; i < Number(refs.amount.value); i += 1) {
     nextDelay = delay + step * i;
-    npm (createPromise(i + 1, nextDelay), nextDelay);
-    set;
+    createPromise(i + 1, nextDelay);
   };
 };
 
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-    Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+  return new Promise(shouldResolve => {
+    if (shouldResolve) {
+     
+      setTimeout(() =>
+        // console.log(`✅ Fulfilled promise ${position} in ${delay}ms`),
+      Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`), delay);
 
-  } else {
-    console.log(`❌ Rejected promise ${position} in ${delay}ms`),
-     Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
-}
-}
+    } else {
+      setTimeout(() =>
+      //console.log(`❌ Rejected promise ${position} in ${delay}ms`),
+        Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`), delay);
+    }
+  });
+};
+
+
+/*
+const makePromise = (text, delay) => {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(text), delay);
+  });
+};*/
