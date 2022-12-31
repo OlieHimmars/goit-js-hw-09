@@ -1,4 +1,4 @@
-import Notiflix from 'notiflix';
+import Notiflix from 'notiflix';//не обов'язково
 
 const refs = {
   form: document.querySelector('form'),
@@ -18,17 +18,23 @@ function onSubmit(e) {
     nextDelay = delay + step * i;
     createPromise(i + 1, nextDelay);
   };
+  refs.delay.value = '';
+  refs.amount.value = '';
+  refs.step.value = '';
 };
 
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
-  return new Promise(shouldResolve => {
-    if (shouldResolve) {
-      setTimeout(() =>
-      Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`), delay);
-    } else {
-      setTimeout(() =>
-        Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`), delay);
-    }
+  return new Promise(() => {
+    setTimeout(() => {
+      if (shouldResolve) {
+        console.log(`✅ Fulfilled promise ${position} in ${delay}ms`),
+        Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`)
+
+      } else {
+        console.log(`❌ Rejected promise ${position} in ${delay}ms`),
+        Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`)
+      }
+    }, delay);
   });
-};
+}
