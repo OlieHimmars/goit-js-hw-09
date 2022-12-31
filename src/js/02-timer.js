@@ -10,8 +10,8 @@ const options = {
   minuteIncrement: 1,
   disableMobile: true,
     onClose(selectedDates) {
-         newDate = selectedDates[0];
-    if (newDate.getTime() > fp.now.getTime()) {
+         //newDate = selectedDates[0];
+    if (fp.selectedDates[0].getTime() > fp.now.getTime()) {
         startBtn.disabled = false;
     } else{
         Notiflix.Notify.failure('Please choose a date in the future');
@@ -28,14 +28,11 @@ let hoursOnCount = document.querySelector('span[data-hours]');
 let minOnCount = document.querySelector('span[data-minutes]');
 let secOnCount = document.querySelector('span[data-seconds]');
 
-let onCount = 0;
-let newDate = null;
 startBtn.disabled = true;
 startBtn.addEventListener('click', onStart);
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
-    ms -= 1000;
   const second = 1000;
   const minute = second * 60;
   const hour = minute * 60;
@@ -58,12 +55,17 @@ function addLeadingZero(value) {
 };
 
 function onStart(e) {
-  setInterval(() => { updateClock(convertMs(newDate.getTime() - Date.now())); }, 1000 )
+  setInterval(() => { updateClock(convertMs(fp.selectedDates[0].getTime() - Date.now())); }, 1000);
 };
 
 function updateClock({ days, hours, minutes, seconds }) {
+  if (fp.selectedDates[0].getTime() > Date.now()) {
     daysOnCount.innerHTML = addLeadingZero(days);
     hoursOnCount.innerHTML = addLeadingZero(hours);
     minOnCount.innerHTML = addLeadingZero(minutes);
     secOnCount.innerHTML = addLeadingZero(seconds);
-}
+  }
+  else {
+    clearInterval();
+  };
+};
